@@ -350,6 +350,13 @@ class dbManager {
             })
         })
     }
+    async edit(map){
+        var key;
+        for(key in map){
+            this.set(key, map[key]);
+        }
+        return await this.update();
+    }
 
 
 
