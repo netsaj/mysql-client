@@ -1,6 +1,19 @@
 'use strict';
 
 var Manager = require('./src/database/dbManager')
+var config = {
+    db :{
+        host     : 'localhost',
+        user     : 'root',
+        password : 'root',
+        database : 'sigesen'
+    },
+    app: {
+        folder : __dirname
+    }
+}
+
+global.config = config;
 
 
 class Main {
@@ -10,16 +23,11 @@ class Main {
     }
 
     async run(){
-        var db = new  Manager({
-            host     : 'localhost',
-            user     : 'root',
-            password : 'root',
-            database : 'bifrost'
-        });
 
-        var lista =  await db.table('usuario').printSql().set('nombre','Fabio').where('usuario', '=', 'demo3').update();
+        var db = new  Manager();
+
+        var lista =  await db.table('areas').printSql().set('codigo',12).where('id', '=', 1).update();
         console.log(lista);
     }
 }
-
 module.exports = new Main()

@@ -1,9 +1,12 @@
+'use strict';
+
 var mysql = require('mysql');
 
 
 class dbManager {
 
-    constructor(params) {
+    constructor() {
+        console.log(__dirname)
         this._table = "";
         this._select = "*";
         this._set = "";
@@ -14,7 +17,7 @@ class dbManager {
         this._insert = "";
         this._order_by = "";
         this._group_by = "";
-        this._connection = mysql.createConnection(params);
+        this._connection = mysql.createConnection(global.config.db);
         this._connection.connect();
         this.printsql = false;
         this.__fullInfo = {};
@@ -334,6 +337,21 @@ class dbManager {
             })
         })
     }
+
+    async insert(map){
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this._connection.query("INSERT INTO `"+_this._table+"` SET ? ", map, function (error, results, fields) {
+                if (error) throw error;
+                _this.__fullInfo = results;
+                _this.__fields = fields;
+                _this.__errors = error;
+                return resolve(results.insertId);
+            })
+        })
+    }
+
+
 
 }
 
