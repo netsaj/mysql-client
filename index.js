@@ -17,8 +17,11 @@ class Main {
             database : 'bifrost'
         });
 
-        var lista =  await db.table('usuario').printSql().set('nombre','Fabio').where('usuario', '=', 'demo3').update();
-        console.log(lista);
+        //var lista =  await db.table('usuario').printSql().set('nombre','Fabio').where('usuario', '=', 'demo3').update();
+        var usuario = {codigo: 'FAB2', nombre: 'Cuenta demo2', tipo_cuenta : 'CAJA GENERAL', esActiva : true,
+            saldo_inicial: 1000.20};
+        var lista = await db.table('cuenta').insert(usuario);
+        console.log("id: "+lista);
     }
 }
 

@@ -37,24 +37,24 @@ class dbManager {
     }
 
     rightJoin(tabla, pk, fk) {
-        this._joins += "   RIGHT JOIN  " + tabla + " ON " + pk + " = " + fk + " \n";
+        this._joins += "   RIGHT JOIN  `" + tabla + "` ON `" + pk + "` = `" + fk + "` \n";
         return this;
     }
 
 
     leftJoin(tabla, pk, fk) {
-        this._joins += "   LEFT JOIN  " + tabla + " ON " + pk + " = " + fk + " \n";
+        this._joins += "   LEFT JOIN  `" + tabla + "` ON `" + pk + "` = `" + fk + "` \n";
         return this;
     }
 
 
     join(tabla, pk, fk) {
-        this._joins += "   JOIN  " + tabla + " ON " + pk + " = " + fk + " \n";
+        this._joins += "   JOIN  `" + tabla + "` ON `" + pk + "` = `" + fk + "` \n";
         return this;
     }
 
     innerJoin(tabla, pk, fk) {
-        this._joins += "   INNER JOIN  " + tabla + " ON (" + pk + " = " + fk + ") \n";
+        this._joins += "   INNER JOIN  `" + tabla + "` ON (`" + pk + "` = `" + fk + "`) \n";
         return this;
     }
 
@@ -65,18 +65,18 @@ class dbManager {
 
     where(campo, comparador, criterio) {
         if (this._where.length == 0) {
-            this._where = " " + campo + " " + comparador.toUpperCase() + " '" + criterio + "' ";
+            this._where = " `" + campo + "` " + comparador.toUpperCase() + " '" + criterio + "' ";
         } else {
-            this._where += " AND " + campo + " " + comparador.toUpperCase() + " '" + criterio + "' ";
+            this._where += " AND `" + campo + "` " + comparador.toUpperCase() + " '" + criterio + "' ";
         }
         return this;
     }
 
     whereNull(campo) {
         if (this._where.length == 0) {
-            this._where = " " + campo + " IS NULL ";
+            this._where = " `" + campo + "` IS NULL ";
         } else {
-            this._where += " AND " + campo + " IS NULL";
+            this._where += " AND `" + campo + "` IS NULL";
         }
         return this;
     }
@@ -84,19 +84,19 @@ class dbManager {
 
     whereNoNull(campo) {
         if (this._where.length == 0) {
-            this._where = " " + campo + " IS NOT NULL ";
+            this._where = " `" + campo + "` IS NOT NULL ";
         }
         else {
-            this._where += " AND " + campo + " IS NOT NULL";
+            this._where += " AND `" + campo + "` IS NOT NULL";
         }
         return this;
     }
 
     whereOr(campo, comparador, criterio) {
         if (this._where.length == 0) {
-            this._where = " " + campo + " " + comparador.toUpperCase() + " '" + criterio + "' ";
+            this._where = " `" + campo + "` " + comparador.toUpperCase() + " '" + criterio + "' ";
         } else {
-            this._where += " OR " + campo + " " + comparador.toUpperCase() + " '" + criterio + "' ";
+            this._where += " OR `" + campo + "` " + comparador.toUpperCase() + " '" + criterio + "' ";
         }
         return this;
     }
@@ -126,36 +126,36 @@ class dbManager {
 
     orderBy(campo, criterio) {
         if (this._order_by.length == 0) {
-            this._order_by = " " + campo + " " + criterio;
+            this._order_by = " `" + campo + "` " + criterio;
         } else {
-            this._order_by += " ,  " + campo + " " + criterio;
+            this._order_by += " ,  `" + campo + "` " + criterio;
         }
         return this;
     }
 
     orderByAsc(campo) {
         if (this._order_by.length == 0) {
-            this._order_by = "\nORDER BY " + campo + " ASC";
+            this._order_by = "\nORDER BY `" + campo + "` ASC";
         } else {
-            this._order_by += " ,  " + campo + " ASC";
+            this._order_by += " ,  `" + campo + "` ASC";
         }
         return this;
     }
 
     orderByDesc(campo) {
         if (this._order_by.length == 0) {
-            this._order_by = "\nORDER BY " + campo + " DESC";
+            this._order_by = "\nORDER BY `" + campo + "` DESC";
         } else {
-            this._order_by += " ,  " + campo + " DESC";
+            this._order_by += " ,  `" + campo + "` DESC";
         }
         return this;
     }
 
     groupBy(campo) {
         if (this._group_by.length == 0) {
-            this._group_by = "\nGROUP BY " + campo + " ";
+            this._group_by = "\nGROUP BY `" + campo + "` ";
         } else {
-            this._group_by += " ,  " + campo;
+            this._group_by += " ,  `" + campo+"` ";
         }
         return this;
     }
@@ -169,16 +169,16 @@ class dbManager {
         }
         if (this._set.length == 0) {
             if (valor == null) {
-                this._set = " " + campo + " = NULL ";
+                this._set = " `" + campo + "` = NULL ";
             } else {
-                this._set = " " + campo + " = '" + value + "'";
+                this._set = " `" + campo + "` = '" + value + "'";
             }
 
         } else {
             if (valor == null) {
-                this._set += " , " + campo + " = NULL ";
+                this._set += " , `" + campo + "` = NULL ";
             } else {
-                this._set += " , " + campo + " = '" + value + "' ";
+                this._set += " , `" + campo + "` = '" + value + "' ";
             }
 
         }
@@ -188,9 +188,9 @@ class dbManager {
 
     setNULL(campo) {
         if (this._set.length == 0) {
-            this._set = campo + " = NULL ";
+            this._set = "`"+campo + "` = NULL ";
         } else {
-            this._set += " , " + campo + " = NULL ";
+            this._set += " , `" + campo + "` = NULL ";
         }
         return this;
     }
@@ -211,8 +211,8 @@ class dbManager {
     sql(tipo) {
         if (tipo == ("delete")) {
             let sql
-                = "DELETE FROM "
-                + this._table + " ";
+                = "DELETE FROM `"
+                + this._table + "` ";
             if (!this._where.length == 0) {
                 sql += " WHERE " + this._where;
             }
@@ -225,9 +225,9 @@ class dbManager {
             let sql
                 = "SELECT " + "\n"
                 + this._select
-                + " FROM " + "\n"
+                + " FROM `" + "\n"
                 + this._table + "\n"
-                + "  " + this._joins + " "
+                + "`  " + this._joins + " "
                 + "\n";
             if (!this._where.length == 0) {
                 sql += " WHERE " + this._where + "\n";
@@ -238,11 +238,13 @@ class dbManager {
                 console.log(sql);
             }
             return sql;
-        } else if (tipo == ("update")) {
+        }
+
+        else if (tipo == ("update")) {
             let sql
-                = "UPDATE "
+                = "UPDATE `"
                 + this._table
-                + " SET "
+                + "` SET "
                 + this._set
                 + "";
             if (!this._where.length == 0) {
@@ -331,6 +333,30 @@ class dbManager {
                 console.log(results);
                 console.log("========")
                 return resolve(results.changedRows);
+            })
+        })
+    }
+    async insert(map){
+        var _this = this;
+        /*let key, names='', values='';
+        for (key in map) {
+            if (user.hasOwnProperty(key)) {
+                this.set(key, map[key])
+            }
+        }
+        let sql = "INSERT INTO `"+this._table+"` SET "+this._set;
+        */
+        return new Promise(function (resolve, reject) {
+            _this._connection.query('INSERT INTO `'+_this._table+'` SET ?',map,
+                function (error, results, fields) {
+                if (error) throw error;
+
+                _this.__fullInfo = results;
+                _this.__fields = fields;
+                _this.__errors = error;
+                console.log(results);
+                console.log("========")
+                return resolve(results.insertId);
             })
         })
     }
