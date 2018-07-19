@@ -1,10 +1,12 @@
 'use strict';
+
 var mysql = require('mysql');
 
 
 class dbManager {
 
-    constructor(params) {
+    constructor() {
+        console.log(__dirname)
         this._table = "";
         this._select = "*";
         this._set = "";
@@ -352,15 +354,27 @@ class dbManager {
                 function (error, results, fields) {
                 if (error) throw error;
 
+    async insert(map){
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this._connection.query("INSERT INTO `"+_this._table+"` SET ? ", map, function (error, results, fields) {
+                if (error) throw error;
                 _this.__fullInfo = results;
                 _this.__fields = fields;
                 _this.__errors = error;
-                console.log(results);
-                console.log("========")
                 return resolve(results.insertId);
             })
         })
     }
+    async edit(map){
+        var key;
+        for(key in map){
+            this.set(key, map[key]);
+        }
+        return await this.update();
+    }
+
+
 
 }
 

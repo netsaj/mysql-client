@@ -1,6 +1,6 @@
 {
   "name": "@netsaj/mysql-client",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/netsaj/mysql-client.git"
   },
   "keywords": [
-    "demo"
+    "mysql, database"
   ],
   "author": "Fabio E. Moreno <fabiomoreno@outlook.com> (http://www.femr.co)",
   "license": "ISC",
