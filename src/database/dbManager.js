@@ -1,3 +1,4 @@
+'use strict';
 var mysql = require('mysql');
 
 
@@ -14,7 +15,7 @@ class dbManager {
         this._insert = "";
         this._order_by = "";
         this._group_by = "";
-        this._connection = mysql.createConnection(params);
+        this._connection = mysql.createConnection(global.config.db);
         this._connection.connect();
         this.printsql = false;
         this.__fullInfo = {};
