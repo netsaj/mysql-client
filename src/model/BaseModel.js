@@ -84,17 +84,10 @@ class BaseModel {
 
 
 
-    constructor(table, attributes){
-        this._table = table;
-        this._attributes = attributes;
-        // restaure the global connection to mysql server
-        var connection = global.__database.connection;
-        //if the connection is not defined, start a new connection
-        if(connection === undefined || connection == null){
-            connection = new dbManager();
-        }å
-        this.__connection = connection;
+    constructor(object){
+        if( object instanceof BaseModel){
 
+        }
     }
 
 
