@@ -15,7 +15,7 @@ npm install
 ```
 
 #### Configure
-
+Define a global variable with the params of connection to mysql server
 ```js
 /*index.js file*/
 
@@ -30,13 +30,44 @@ var config = {
         folder : __dirname //root folder app
     }
 }
-
+//nodejs globals vars
 global.config = config;
 ```
 
 #### Usage
 
-####-insert
+```js
+var dbManager = require('node_modules/@netsaj/mysql-client')
+var db = new dbManager();
+
+// SELECT ONE
+
+var user = await db.table('users')
+.where('email', '=','asd@domain.com')
+.first();
+
+var users_list = await db.table('users')
+.where('active', '=',true)
+.all();
+```
+
+#####Selects
+
+do
+* select('field1, field2, field3')
+
+
+#####Where
+* where
+* whereNull
+* whereNoNull
+* whereOr
+* whereRaw
+* whereOrRaw
+
+
+
+
 
 =======================
 

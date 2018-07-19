@@ -62,7 +62,7 @@ class dbManager {
     }
 
     joinRaw(join) {
-        joins += "   " + join + " \n";
+        this._joins += "   " + join + " \n";
         return this;
     }
 
@@ -339,20 +339,7 @@ class dbManager {
             })
         })
     }
-    async insert(map){
-        var _this = this;
-        /*let key, names='', values='';
-        for (key in map) {
-            if (user.hasOwnProperty(key)) {
-                this.set(key, map[key])
-            }
-        }
-        let sql = "INSERT INTO `"+this._table+"` SET "+this._set;
-        */
-        return new Promise(function (resolve, reject) {
-            _this._connection.query('INSERT INTO `'+_this._table+'` SET ?',map,
-                function (error, results, fields) {
-                if (error) throw error;
+
 
     async insert(map){
         var _this = this;
@@ -371,7 +358,7 @@ class dbManager {
         for(key in map){
             this.set(key, map[key]);
         }
-        return await this.update();
+        return this.update();
     }
 
 
