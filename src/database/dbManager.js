@@ -214,8 +214,7 @@ class dbManager {
     sql(tipo) {
         if (tipo == ("delete")) {
             let sql
-                = "DELETE FROM `"
-                + this._table + "` ";
+                = "DELETE FROM `" + this._table + "` ";
             if (!this._where.length == 0) {
                 sql += " WHERE " + this._where;
             }
@@ -228,9 +227,7 @@ class dbManager {
             let sql
                 = "SELECT " + "\n"
                 + this._select
-                + " FROM `" +
-                + this._table +
-                + "`  " + this._joins + " "
+                + " FROM `"+ this._table+ "`  " + this._joins + " "
                 + "\n";
             if (!this._where.length == 0) {
                 sql += " WHERE " + this._where + "\n";
@@ -245,9 +242,7 @@ class dbManager {
 
         else if (tipo == ("update")) {
             let sql
-                = "UPDATE `"
-                + this._table
-                + "` SET "
+                = "UPDATE `" + this._table + "` SET "
                 + this._set
                 + "";
             if (!this._where.length == 0) {
