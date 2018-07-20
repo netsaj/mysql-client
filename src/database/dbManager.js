@@ -228,8 +228,8 @@ class dbManager {
             let sql
                 = "SELECT " + "\n"
                 + this._select
-                + " FROM `" + "\n"
-                + this._table + "\n"
+                + " FROM `" +
+                + this._table +
                 + "`  " + this._joins + " "
                 + "\n";
             if (!this._where.length == 0) {
