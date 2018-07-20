@@ -7,7 +7,7 @@ Mysql client for nodejs
 
 ``` bash
 #Install mysql-client
-npm i @netsaj/mysql-client
+npm install --save @netsaj/mysql-client
 
 # install dependencies
 npm install
@@ -36,7 +36,7 @@ global.config = config;
 
 #### Usage
 
-#####Selects
+##### Selects
 
 
 
@@ -63,7 +63,7 @@ var users_list = await db.table('users')
 ```
 
 
-#####Where
+##### Where
 
 put the field you wanna filter, one operator (=, >, <, <=, >=, <>) and the value to search
 
@@ -111,7 +111,7 @@ is used when needs complex expressions
 .whereOrRaw(" DATE(create_at) = '2018-10-12' ")
 ```
 
-#####insert
+##### insert
 
 ```js
 // the json var
@@ -132,7 +132,7 @@ console.log(id)
 print>_ 10
 ```
 
-#####edit
+##### edit
 
 ```js
 // the json var
@@ -172,7 +172,7 @@ print>_ 1
 ````
 
 
-#####delete
+##### delete
 
 
 ````js
