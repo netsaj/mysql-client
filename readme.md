@@ -41,8 +41,8 @@ global.config = config;
 
 
 ```js
-var dbManager = require('node_modules/@netsaj/mysql-client')
-var db = new dbManager();
+var DB = require('node_modules/@netsaj/mysql-client')
+var db = new DB();
 
 // SELECT ONE
 

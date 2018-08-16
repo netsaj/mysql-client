@@ -3,7 +3,7 @@
 var mysql = require('mysql');
 
 
-class dbManager {
+class DB {
 
     constructor() {
         console.log(__dirname)
@@ -360,4 +360,4 @@ class dbManager {
 
 }
 
-module.exports = dbManager
+module.exports = DB
