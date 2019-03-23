@@ -3,9 +3,22 @@
 var mysql = require('mysql');
 
 
-class DB {
 
-    constructor() {
+
+class Database {
+
+    constructor(host, user, passwd, database) {
+        if(global.__femrORM__===undefined){
+            this.__config={
+                host     : host,
+                user     : user,
+                password : passwd,
+                database : database
+            };
+            global.__femrORM__= this.__femrORM__;
+        }else{
+            this.__config = global.__femrORM__;
+        }
         console.log(__dirname)
         this._table = "";
         this._select = "*";
@@ -17,7 +30,7 @@ class DB {
         this._insert = "";
         this._order_by = "";
         this._group_by = "";
-        this._connection = mysql.createConnection(global.config.db);
+        this._connection = mysql.createConnection(this.__config);
         this._connection.connect();
         this.printsql = false;
         this.__fullInfo = {};
@@ -40,24 +53,24 @@ class DB {
     }
 
     rightJoin(tabla, pk, fk) {
-        this._joins += "   RIGHT JOIN  `" + tabla + "` ON `" + pk + "` = `" + fk + "` \n";
+        this._joins += "   RIGHT JOIN  " + tabla + " ON " + pk + " = " + fk + " \n";
         return this;
     }
 
 
     leftJoin(tabla, pk, fk) {
-        this._joins += "   LEFT JOIN  `" + tabla + "` ON `" + pk + "` = `" + fk + "` \n";
+        this._joins += "   LEFT JOIN  " + tabla + " ON " + pk + " = " + fk + " \n";
         return this;
     }
 
 
     join(tabla, pk, fk) {
-        this._joins += "   JOIN  `" + tabla + "` ON `" + pk + "` = `" + fk + "` \n";
+        this._joins += "   JOIN  " + tabla + " ON " + pk + " = " + fk + " \n";
         return this;
     }
 
     innerJoin(tabla, pk, fk) {
-        this._joins += "   INNER JOIN  `" + tabla + "` ON (`" + pk + "` = `" + fk + "`) \n";
+        this._joins += "   INNER JOIN  " + tabla + " ON (" + pk + " = " + fk + ") \n";
         return this;
     }
 
@@ -68,18 +81,18 @@ class DB {
 
     where(campo, comparador, criterio) {
         if (this._where.length == 0) {
-            this._where = " `" + campo + "` " + comparador.toUpperCase() + " '" + criterio + "' ";
+            this._where = " " + campo + " " + comparador.toUpperCase() + " '" + criterio + "' ";
         } else {
-            this._where += " AND `" + campo + "` " + comparador.toUpperCase() + " '" + criterio + "' ";
+            this._where += " AND " + campo + " " + comparador.toUpperCase() + " '" + criterio + "' ";
         }
         return this;
     }
 
     whereNull(campo) {
         if (this._where.length == 0) {
-            this._where = " `" + campo + "` IS NULL ";
+            this._where = " " + campo + " IS NULL ";
         } else {
-            this._where += " AND `" + campo + "` IS NULL";
+            this._where += " AND " + campo + " IS NULL";
         }
         return this;
     }
@@ -87,19 +100,19 @@ class DB {
 
     whereNoNull(campo) {
         if (this._where.length == 0) {
-            this._where = " `" + campo + "` IS NOT NULL ";
+            this._where = " " + campo + " IS NOT NULL ";
         }
         else {
-            this._where += " AND `" + campo + "` IS NOT NULL";
+            this._where += " AND " + campo + " IS NOT NULL";
         }
         return this;
     }
 
     whereOr(campo, comparador, criterio) {
         if (this._where.length == 0) {
-            this._where = " `" + campo + "` " + comparador.toUpperCase() + " '" + criterio + "' ";
+            this._where = " " + campo + " " + comparador.toUpperCase() + " '" + criterio + "' ";
         } else {
-            this._where += " OR `" + campo + "` " + comparador.toUpperCase() + " '" + criterio + "' ";
+            this._where += " OR " + campo + " " + comparador.toUpperCase() + " '" + criterio + "' ";
         }
         return this;
     }
@@ -129,36 +142,36 @@ class DB {
 
     orderBy(campo, criterio) {
         if (this._order_by.length == 0) {
-            this._order_by = " `" + campo + "` " + criterio;
+            this._order_by = " " + campo + " " + criterio;
         } else {
-            this._order_by += " ,  `" + campo + "` " + criterio;
+            this._order_by += " ,  " + campo + " " + criterio;
         }
         return this;
     }
 
     orderByAsc(campo) {
         if (this._order_by.length == 0) {
-            this._order_by = "\nORDER BY `" + campo + "` ASC";
+            this._order_by = "\nORDER BY " + campo + " ASC";
         } else {
-            this._order_by += " ,  `" + campo + "` ASC";
+            this._order_by += " ,  " + campo + " ASC";
         }
         return this;
     }
 
     orderByDesc(campo) {
         if (this._order_by.length == 0) {
-            this._order_by = "\nORDER BY `" + campo + "` DESC";
+            this._order_by = "\nORDER BY " + campo + " DESC";
         } else {
-            this._order_by += " ,  `" + campo + "` DESC";
+            this._order_by += " ,  " + campo + " DESC";
         }
         return this;
     }
 
     groupBy(campo) {
         if (this._group_by.length == 0) {
-            this._group_by = "\nGROUP BY `" + campo + "` ";
+            this._group_by = "\nGROUP BY " + campo + " ";
         } else {
-            this._group_by += " ,  `" + campo+"` ";
+            this._group_by += " ,  " + campo+" ";
         }
         return this;
     }
@@ -172,16 +185,16 @@ class DB {
         }
         if (this._set.length == 0) {
             if (valor == null) {
-                this._set = " `" + campo + "` = NULL ";
+                this._set = " " + campo + " = NULL ";
             } else {
-                this._set = " `" + campo + "` = '" + value + "'";
+                this._set = " " + campo + " = '" + value + "'";
             }
 
         } else {
             if (valor == null) {
-                this._set += " , `" + campo + "` = NULL ";
+                this._set += " , " + campo + " = NULL ";
             } else {
-                this._set += " , `" + campo + "` = '" + value + "' ";
+                this._set += " , " + campo + " = '" + value + "' ";
             }
 
         }
@@ -191,9 +204,9 @@ class DB {
 
     setNULL(campo) {
         if (this._set.length == 0) {
-            this._set = "`"+campo + "` = NULL ";
+            this._set = ""+campo + " = NULL ";
         } else {
-            this._set += " , `" + campo + "` = NULL ";
+            this._set += " , " + campo + " = NULL ";
         }
         return this;
     }
@@ -214,7 +227,7 @@ class DB {
     sql(tipo) {
         if (tipo == ("delete")) {
             let sql
-                = "DELETE FROM `" + this._table + "` ";
+                = "DELETE FROM " + this._table + " ";
             if (!this._where.length == 0) {
                 sql += " WHERE " + this._where;
             }
@@ -227,7 +240,7 @@ class DB {
             let sql
                 = "SELECT " + "\n"
                 + this._select
-                + " FROM `"+ this._table+ "`  " + this._joins + " "
+                + " FROM "+ this._table+ "  " + this._joins + " "
                 + "\n";
             if (!this._where.length == 0) {
                 sql += " WHERE " + this._where + "\n";
@@ -242,7 +255,7 @@ class DB {
 
         else if (tipo == ("update")) {
             let sql
-                = "UPDATE `" + this._table + "` SET "
+                = "UPDATE " + this._table + " SET "
                 + this._set
                 + "";
             if (!this._where.length == 0) {
@@ -339,7 +352,7 @@ class DB {
     async insert(map){
         var _this = this;
         return new Promise(function (resolve, reject) {
-            _this._connection.query("INSERT INTO `"+_this._table+"` SET ? ", map, function (error, results, fields) {
+            _this._connection.query("INSERT INTO "+_this._table+" SET ? ", map, function (error, results, fields) {
                 if (error) throw error;
                 _this.__fullInfo = results;
                 _this.__fields = fields;
@@ -360,4 +373,14 @@ class DB {
 
 }
 
-module.exports = DB
+
+exports.Database = Database;
+exports.Inicialize = (host, user, password, database)=>{
+    this.__config={
+        host     : host,
+        user     : user,
+        password : password,
+        database : database
+    };
+    global.__femrORM__= this.__femrORM__;
+}
